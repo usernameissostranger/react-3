@@ -5,7 +5,13 @@ const Calculator = () => {
   const [input, setInput] = useState('');
   const [result, setResult] = useState('');
 
-  const handleClick = (value) => setInput((prevInput) => prevInput + value);
+  const handleClick = (value) => {
+    if (value === '^') {
+      setInput((prevInput) => prevInput + '**');
+    } else {
+      setInput((prevInput) => prevInput + value);
+    }
+  };
   const handleCalculate = () => setResult(() => eval(input).toString());
 
   return (
@@ -33,15 +39,22 @@ const Calculator = () => {
         ))}
       </div>
       <div className="buttonRow">
-        <button onClick={() => handleClick('0')} className="zeroButton">
+        {['0', '√', '^', '/'].map((value) => (
+          <button key={value} onClick={() => handleClick(value)}>
+            {value}
+          </button>
+        ))}
+      </div>
+      <div className="buttonRow">
+        {/* <button onClick={() => handleClick('0')} className="zeroButton">
           0
-        </button>
+        </button> */}
         <button onClick={handleCalculate} className="equalButton">
           =
         </button>
-        <button onClick={() => handleClick('/')} className="operatorButton">
+        {/* <button onClick={() => handleClick('/')} className="operatorButton">
           /
-        </button>
+        </button> */}
       </div>
       <div className="result">
         <p>{result}</p>
